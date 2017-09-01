@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC
+  "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+  <appender name="info-out" class="org.apache.log4j.RollingFileAppender">
+    <param name="File" value="log/info.log"/>
+    <param name="append" value="true"/>
+    <param name="maxFileSize" value="500MB"/>
+    <param name="maxBackupIndex" value="5"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%5p] (%25F:%-3L): %m %n"/>
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelMatchFilter">
+      <param name="LevelToMatch" value="info"/>
+      <param name="AcceptOnMatch" value="true"/>
+    </filter>
+    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+  </appender>
+
+  <appender name="error-out" class="org.apache.log4j.RollingFileAppender">
+    <param name="File" value="log/error.log"/>
+    <param name="append" value="true"/>
+    <param name="maxFileSize" value="500MB"/>
+    <param name="maxBackupIndex" value="5"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%5p] (%25F:%-3L): %m %n"/>
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelMatchFilter">
+      <param name="LevelToMatch" value="error"/>
+      <param name="AcceptOnMatch" value="true"/>
+    </filter>
+    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+  </appender>
+
+  <appender name="console-out" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%5p] (%25F:%-3L): %m %n"/>
+    </layout>
+  </appender>
+
+  <logger name="de.marko.pentest" additivity="false">
+    <level value="debug"/>
+    <appender-ref ref="console-out"/>
+    <appender-ref ref="info-out"/>
+    <appender-ref ref="error-out"/>
+  </logger>
+
+  <root>
+    <priority value="debug"/>
+    <appender-ref ref="console-out"></appender-ref>
+    <appender-ref ref="info-out"></appender-ref>
+    <appender-ref ref="error-out"></appender-ref>
+  </root>
+</log4j:configuration>
