@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+MYSQL_BOX_NAME = ENV.fetch("MYSQL_BOX_NAME", "mysql-master")
+BOX_SYS = ENV.fetch("BOX_SYS", "ubuntu/trusty64")
+MYSQL_IP = ENV.fetch("MYSQL_IP", "192.168.34.9")
+BOX_NOPROXY = ENV.fetch("BOX_NOPROXY", "localhost,127.0.0.1, 192.168.56.*, 192.168.34.*")
+BOX_PROXY = ENV.fetch("BOX_PROXY", "<insert proxy>")
+BOX_MEM = ENV.fetch("BOX_MEM", "512")
+BOX_CPUS = ENV.fetch("BOX_CPUS", "2")
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+	# config for the mysql box
+	config.vm.define :mysql do |mysql|
+		mysql.vm.box = BOX_SYS
+		mysql.vm.hostname = MYSQL_BOX_NAME
+
+		config.vm.provision :shell, :path => "provisioning.sh"
+
+		# set proxy
+		if Vagrant.has_plugin?("vagrant-proxyconf")
+			config.proxy.http     = BOX_PROXY
+			config.proxy.https    = BOX_PROXY
+			config.proxy.no_proxy = BOX_NOPROXY
+		end
+
+		# mysql port
+		mysql.vm.network "private_network", ip: MYSQL_IP
+		mysql.vm.network :forwarded_port, guest: 1099, host: 1099
+		mysql.vm.network :forwarded_port, guest: 31337, host: 31337
+
+		mysql.vm.provider "virtualbox" do |v|
+			v.memory = BOX_MEM
+			v.cpus = BOX_CPUS
+		end
+	end
+
+end
