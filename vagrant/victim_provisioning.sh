@@ -12,3 +12,7 @@ sudo echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/deb
 sudo echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
 sudo apt-get install --yes oracle-java8-installer
 yes "" | apt-get -f install
+
+cp /vagrant/data/de.marko.pentest.vuln-1.0.jar /home/vagrant/
+# run vulnerable endpoint in background
+java -Dcom.sun.jndi.rmi.object.trustURLCodebase=true -jar de.marko.pentest.vuln-1.0.jar &

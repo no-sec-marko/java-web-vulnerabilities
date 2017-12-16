@@ -33,6 +33,21 @@
     <filter class="org.apache.log4j.varia.DenyAllFilter"/>
   </appender>
 
+  <appender name="debug-out" class="org.apache.log4j.RollingFileAppender">
+    <param name="File" value="log/debug.log"/>
+    <param name="append" value="true"/>
+    <param name="maxFileSize" value="500MB"/>
+    <param name="maxBackupIndex" value="5"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%5p] (%25F:%-3L): %m %n"/>
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelMatchFilter">
+      <param name="LevelToMatch" value="debug"/>
+      <param name="AcceptOnMatch" value="true"/>
+    </filter>
+    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+  </appender>
+
   <appender name="console-out" class="org.apache.log4j.ConsoleAppender">
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%5p] (%25F:%-3L): %m %n"/>
@@ -43,12 +58,14 @@
     <level value="debug"/>
     <appender-ref ref="console-out"/>
     <appender-ref ref="info-out"/>
+    <appender-ref ref="debug-out"/>
     <appender-ref ref="error-out"/>
   </logger>
 
   <root>
     <priority value="debug"/>
     <appender-ref ref="console-out"></appender-ref>
+    <appender-ref ref="debug-out"></appender-ref>
     <appender-ref ref="info-out"></appender-ref>
     <appender-ref ref="error-out"></appender-ref>
   </root>

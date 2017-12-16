@@ -34,7 +34,7 @@
       <AppenderRef ref="Routing"/>
     </Logger>
 
-    <Root level="info">
+    <Root level="debug">
       <AppenderRef ref="STDOUT"/>
     </Root>
   </Loggers>
