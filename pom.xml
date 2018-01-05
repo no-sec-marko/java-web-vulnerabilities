@@ -27,6 +27,9 @@
     <json.io.version>4.9.12</json.io.version>
     <spring.version>4.3.10.RELEASE</spring.version>
     <xalan.version>2.7.2</xalan.version>
+    <!-- database -->
+    <org.hibernate.version>5.2.6.Final</org.hibernate.version>
+    <dbcp.version>2.1.1</dbcp.version>
   </properties>
 
   <dependencies>

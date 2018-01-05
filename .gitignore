@@ -118,3 +118,5 @@ out/
 # Crashlytics plugin (for Android Studio and IntelliJ)
 # vertx cache
 .vertx
+# hsql
+data/

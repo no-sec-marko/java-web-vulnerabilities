@@ -11,6 +11,14 @@
 
   <artifactId>de.marko.pentest.rogue</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>dnsjava</groupId>
+      <artifactId>dnsjava</artifactId>
+      <version>2.1.8</version>
+    </dependency>
+  </dependencies>
+
   <reporting>
     <plugins>
       <plugin>
